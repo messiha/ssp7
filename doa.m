@@ -48,12 +48,15 @@ plotSpectrum(mvdrspatialspect);
 
 %------------------MUSIC---------------------------------------------------
 
-musicspatialspect = phased.RootMUSICEstimator('SensorArray',ula,...
-            'OperatingFrequency',fc,...
-            'NumSignalsSource','Property','NumSignals',10)
-musicspatialspect.ForwardBackwardAveraging = true;
-ang_music = step(musicspatialspect, signal);
-plot(musicspatialspect);
+musicspatialspect = phased.MUSICEstimator('SensorArray',ula,...
+        'OperatingFrequency',fc,'ScanAngles',-90:90,...
+        'DOAOutputPort',true,'NumSignalsSource','Property','NumSignals',10);
+[~,ang_music] = musicspatialspect(signal)
+ymvdr = mvdrspatialspect(signal);
+ymusic = musicspatialspect(signal);
+helperPlotDOASpectra(mvdrspatialspect.ScanAngles,...
+musicspatialspect.ScanAngles,ymvdr,ymusic,'ULA')
+
 
 %----------------------IG Pencil-------------------------------------------
 
