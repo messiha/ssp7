@@ -44,7 +44,7 @@ mvdrspatialspect = phased.MVDREstimator('SensorArray',ula,...
         'OperatingFrequency',fc,'ScanAngles',-90:90,...
         'DOAOutputPort',true,'NumSignals',10);
 [~,ang_mvdr] = step(mvdrspatialspect, signal)
-plotSpectrum(mvdrspatialspect);
+% plotSpectrum(mvdrspatialspect);
 
 %------------------MUSIC---------------------------------------------------
 
@@ -55,7 +55,7 @@ musicspatialspect = phased.MUSICEstimator('SensorArray',ula,...
 ymvdr = mvdrspatialspect(signal);
 ymusic = musicspatialspect(signal);
 helperPlotDOASpectra(mvdrspatialspect.ScanAngles,...
-musicspatialspect.ScanAngles,ymvdr,ymusic,'ULA')
+        musicspatialspect.ScanAngles,ymvdr,ymusic,'ULA')
 
 
 %----------------------IG Pencil-------------------------------------------
