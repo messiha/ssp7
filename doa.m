@@ -29,7 +29,7 @@ ang = [ang1(1,1) ang2(1,1) ang3(1,1) ang4(1,1) ang5(1,1) ang6(1,1)...
 pos = getElementPosition(ula)/lambda; 
 
 Nsamp = 100;        % 100 samples
-nPower = 0.1;       % SNR of 10dB
+nPower = 1/10;       % SNR of 10dB
 
 % Assignment Matrix
 A = zeros(10,11);
@@ -48,8 +48,8 @@ spatialspectrum = phased.BeamscanEstimator('SensorArray',ula,...
 spatialspectrum.DOAOutputPort = true;
 spatialspectrum.NumSignals = 10;
 [~, ang_beamscan] = step(spatialspectrum, signal)
-%plotSpectrum(spatialspectrum);
-
+% plotSpectrum(spatialspectrum);
+% hold on;
 %--------------------MVDR--------------------------------------------------
 
 mvdrspatialspect = phased.MVDREstimator('SensorArray',ula,...
@@ -91,11 +91,12 @@ for iter=1:length(phi)
             sin(phi(1,iter)/180*pi));
     end
     pencil = abs(a_phi'*inv(R_hat)*a_phi);
-    yig(iter,1) = 1/pencil;
+    yig(iter,1) = 10/log(pencil^2);
 end
 
 plot(phi, yig);
-legend('MVDR','MUSIC','IG Pencil');
+plot(ang/pi*180, zeros(length(ang)), 'k*')
+legend('MVDR','MUSIC','IG Pencil', 'TRUE DOA');
 
 
 
