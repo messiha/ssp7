@@ -1,3 +1,4 @@
+clear all;
 %---------------------SETUP MODEL------------------------------------------
 %uniform linear array of 11 sensors with isotropic power kept at 0.5 lambda
 
@@ -17,6 +18,8 @@ ang10 = [60; 0];
 
 %signal model with 10 sources at equally spaced between -60 and +60
 angs = [ang1 ang2 ang3 ang4 ang5 ang6 ang7 ang8 ang9 ang10 ];
+ang = [ang1(1,1) ang2(1,1) ang3(1,1) ang4(1,1) ang5(1,1) ang6(1,1)...
+    ang7(1,1) ang8(1,1) ang9(1,1) ang10(1,1)]/180*pi;
 
 
 c = physconst('LightSpeed');
@@ -26,6 +29,13 @@ pos = getElementPosition(ula)/lambda;
 
 Nsamp = 100;        % 100 samples
 nPower = 0.1;       % SNR of 10dB
+
+% Assignment Matrix
+A = zeros(10,11);
+for k = 1:10
+    A(k,:) = exp(-1i*2*pi*lambda/2*sin(ang(k))/lambda*[0:10]);
+end    
+    
 rs = rng(1996);     % pseudo random states for reproducible results
 signal = sensorsig(pos,Nsamp,angs,nPower); %generated signal model samples
 
@@ -57,6 +67,9 @@ ymusic = musicspatialspect(signal);
 helperPlotDOASpectra(mvdrspatialspect.ScanAngles,...
         musicspatialspect.ScanAngles,ymvdr,ymusic,'ULA')
 
-
 %----------------------IG Pencil-------------------------------------------
+
+R_hat = signal*signal';
+[N,V] = eig(R_hat);
+
 
