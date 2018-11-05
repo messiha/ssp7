@@ -1,3 +1,6 @@
+% to be completed
+
+
 function d = calc_distance(Param, Param_)
 %{ 
 This function calculates the distance between two sets of parameters. 
