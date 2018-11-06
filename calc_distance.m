@@ -1,20 +1,18 @@
-% to be completed
+%  completed
 
 
-function d = calc_distance(Param, Param_)
-%{ 
-This function calculates the distance between two sets of parameters. 
+function d = calc_distance(phi,phi1,mu,mu1,J,K)
 
-Input: 
-    Param : old parameters
-    Param_: new parameters
 
-Output: 
-    d: semi-Euclidean distance
-%}
+d = max(max(abs(mu-mu1))');
 
-d = norm(Param.mu1 - Param_.mu1) + norm(Param.mu2 - Param_.mu2);
+for jj = 1:J
+    for k = 1:K
+        dd = max(max(abs(reshape(phi(jj,k,:,:),[2,2])-reshape(phi1(jj,k,:,:),[2,2])))');
+        if dd > d
+            d = dd;
+        end
+    end
+end
 
-% d= sqrt((Param.mu1(1,1) - Param_.mu1(1,1))^2 + (Param.mu1(1,2) - Param_.mu1(1,2))^2 + ...
-%     (Param.mu2(1,1) - Param_.mu2(1,1))^2 + (Param.mu2(1,2) - Param_.mu2(1,2))^2);
 end
