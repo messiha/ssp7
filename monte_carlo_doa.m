@@ -86,6 +86,11 @@ for iter=1:length(phi)
     yig(iter,1) = 1/pencil;
 end
 
+[val, ind] = sort(yig, 'descend');
+ang_ig = ind(1:2)'-91
+
+
+
 plot(phi, yig);
 plot(ang/pi*180, zeros(length(ang)), 'k*')
 legend('MVDR','MUSIC','IG Pencil', 'TRUE DOA');

@@ -91,8 +91,14 @@ for iter=1:length(phi)
             sin(phi(1,iter)/180*pi));
     end
     pencil = abs(a_phi'*inv(R_hat)*a_phi);
-    yig(iter,1) = 10/log(pencil^2);
+    yig(iter,1) = pencil;
 end
+yig = yig.^-1;
+inverse_func = yig;
+yig = yig/max(yig);
+yig =5*log10(yig);
+% [val, ind] = sort(yig, 'descend');
+% ang_ig = ind(1:10)-91
 
 plot(phi, yig);
 plot(ang/pi*180, zeros(length(ang)), 'k*')
