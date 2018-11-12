@@ -72,11 +72,11 @@ hold all;
 
 %----------------------IG Pencil-------------------------------------------
 
-signal = transpose(signal);
+% signal = transpose(signal);
 
 %Since true covariance matrix is unavailable it is replaced by sample
 %covariance matrix
-R_hat = signal*signal';
+R_hat = signal'*signal;
 
 %eigen values and eigen vectors of sample covariance matrix
 [N,V] = eig(R_hat);
